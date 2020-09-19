@@ -1,12 +1,7 @@
 #!/usr/bin/env node
 
-const chalk = require('chalk');
-const clear = require('clear');
 const figlet = require('figlet');
-const path = require('path');
 const program = require('commander');
-
-clear();
 
 console.log(figlet.textSync('pizza-cli', { horizontalLayout: 'full' }));
 
@@ -19,3 +14,18 @@ program
   .option('-c', '--cheese <type>', 'Add the specified type of cheese')
   .option('-C', '--no-cheese', 'You do not want any cheese')
   .parse(program.argv);
+
+console.log('You ordered a pizza with:');
+
+if (program.peppers) console.log('  - peppers');
+if (program.pineapple) console.log('  - pineapple');
+if (program.bbq) console.log('  - bbq');
+
+const cheese: string =
+  program.cheese === true ? 'marble' : program.cheese || 'no';
+
+console.log('  - %s cheese', cheese);
+
+if (!process.argv.slice(2).length) {
+  program.outputHelp();
+}
